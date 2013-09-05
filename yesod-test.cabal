@@ -71,7 +71,6 @@ library
                  , conduit                       >= 1.0
                  , monad-logger                  >= 0.3
                  , fast-logger                   >= 0.3
-                 , heroku                        >= 0.1
                  , network                       >= 2.4
 
 executable         yesod-test
