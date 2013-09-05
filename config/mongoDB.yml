@@ -1,0 +1,24 @@
+Default: &defaults
+  user: yesod-test
+  password: yesod-test
+  host: localhost
+  database: yesod-test
+  connections: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: yesod-test_test
+  <<: *defaults
+
+Staging:
+  database: yesod-test_staging
+  connections: 100
+  <<: *defaults
+
+Production:
+  database: yesod-test_production
+  connections: 100
+  host: localhost
+  <<: *defaults
