@@ -16,9 +16,3 @@ Staging:
   database: yesod-test_staging
   connections: 100
   <<: *defaults
-
-Production:
-  database: yesod-test_production
-  connections: 100
-  host: localhost
-  <<: *defaults

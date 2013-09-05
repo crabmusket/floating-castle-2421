@@ -16,6 +16,7 @@ import qualified Database.Persist
 import Network.HTTP.Conduit (newManager, def)
 import System.IO (stdout)
 import System.Log.FastLogger (mkLogger)
+import Helpers.Heroku
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -53,9 +54,13 @@ makeFoundation :: AppConfig DefaultEnv Extra -> IO App
 makeFoundation conf = do
     manager <- newManager def
     s <- staticSite
-    dbconf <- withYamlEnvironment "config/mongoDB.yml" (appEnv conf)
-              Database.Persist.loadConfig >>=
-              Database.Persist.applyEnv
+    dbconf <- if development
+        -- default behavior when in development
+        then withYamlEnvironment "config/mongoDB.yml" (appEnv conf)
+            Database.Persist.loadConfig >>=
+            Database.Persist.applyEnv
+        -- but parse DATABASE_URL in non-development
+        else herokuConf
     p <- Database.Persist.createPoolConfig (dbconf :: Settings.PersistConf)
     logger <- mkLogger True stdout
     let foundation = App conf s p manager dbconf logger
