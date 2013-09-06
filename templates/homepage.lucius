@@ -1,6 +1,14 @@
 h1 {
-    text-align: center
+   text-align: center
 }
-h2##{aDomId} {
-    color: #990
+
+form#submission {
+	width: 50%;
+	background: #FFFFCC;
+	margin: 0px auto;
+	padding: 10px;
+}
+
+form#submission input[type=text] {
+	width: inherit;
 }

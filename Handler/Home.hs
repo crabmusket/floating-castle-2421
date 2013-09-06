@@ -16,8 +16,7 @@ getHomeR = do
     let submission = Nothing :: Maybe (FileInfo, Text)
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "floating-castle"
         $(widgetFile "homepage")
 
 postHomeR :: Handler Html
@@ -29,11 +28,8 @@ postHomeR = do
             _ -> Nothing
 
     defaultLayout $ do
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "floating-castle"
         $(widgetFile "homepage")
 
-sampleForm :: Form (FileInfo, Text)
-sampleForm = renderDivs $ (,)
-    <$> fileAFormReq "Choose a file"
-    <*> areq textField "What's on the file?" Nothing
+sampleForm :: Form Text
+sampleForm = renderDivs $ areq textField "Add an item:" Nothing

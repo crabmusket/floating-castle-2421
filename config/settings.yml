@@ -1,7 +1,7 @@
 Default: &defaults
   host: "*4" # any IPv4 host
   port: 3000
-  copyright: Insert copyright statement here
+  copyright: And in case I don't see you - good afternoon, good evening and goodnight!
   #analytics: UA-YOURCODE
 
 Development:
