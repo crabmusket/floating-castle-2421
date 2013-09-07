@@ -1,5 +1,5 @@
 <h1>_{MsgHello}
 
-<form #submission method=post action=@{HomeR}#form enctype=#{formEnctype}>
+<form id=#{formId} method=post enctype=#{formEnctype}>
     ^{formWidget}
     <input type="submit" value="Send it!">

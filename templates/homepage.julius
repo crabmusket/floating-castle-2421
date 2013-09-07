@@ -1,0 +1,4 @@
+$('##{rawJS formId}').submit(function() {
+	alert('Submitting... not!');
+	return false;
+});
