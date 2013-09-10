@@ -31,5 +31,5 @@ messageForm = renderDivs $ Message
     <$> areq textField "Add an item:" Nothing
     <*> lift (liftIO getCurrentTime)
 
-renderMarkdown :: Text -> Html
-renderMarkdown = markdown def . fromStrict
+showMarkdown :: Text -> Html
+showMarkdown = markdown def . fromStrict
