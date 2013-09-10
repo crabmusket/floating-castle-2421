@@ -5,6 +5,7 @@ import Import
 import Text.Julius (rawJS)
 import Text.Markdown (markdown, def)
 import Data.Text.Lazy (fromStrict)
+import Data.Time (getCurrentTime)
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -28,6 +29,7 @@ postHomeR = do
 messageForm :: Form Message
 messageForm = renderDivs $ Message
     <$> areq textField "Add an item:" Nothing
+    <*> lift (liftIO getCurrentTime)
 
 renderMarkdown :: Text -> Html
 renderMarkdown = markdown def . fromStrict

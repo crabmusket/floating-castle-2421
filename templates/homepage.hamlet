@@ -8,4 +8,5 @@ $if not $ null messages
     <ul>
         $forall Entity _ message <- messages
             <li>
-                #{renderMarkdown $ messageText message}
+                <p>#{renderMarkdown $ messageText message}
+                <p>#{show $ messagePosted message}
