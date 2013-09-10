@@ -3,3 +3,9 @@
 <form id=#{formId} method=post enctype=#{formEnctype}>
     ^{formWidget}
     <input type="submit" value="Send it!">
+
+$if not $ null messages
+    <ul>
+        $forall Entity _ message <- messages
+            <li>
+                #{renderMarkdown $ messageText message}
