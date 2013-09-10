@@ -6,7 +6,7 @@ import Text.Julius (rawJS)
 
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
+    (formWidget, formEnctype) <- generateFormPost messageForm
     let formId = "theForm" :: Text
     defaultLayout $ do
         setTitle "floating-castle"
@@ -14,12 +14,14 @@ getHomeR = do
 
 postHomeR :: Handler Value
 postHomeR = do
-    ((result, _), _) <- runFormPost sampleForm
-    let submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
+    ((result, _), _) <- runFormPost messageForm
 
-    jsonOrRedirect HomeR (object $ ["value" .= show submission])
+    case result of
+        FormSuccess msg -> do
+            _ <- runDB $ insert msg
+            return $ object ["success" .= True]
+        _ -> return $ object ["error" .= ("Invalid submission." :: Text)]
 
-sampleForm :: Form Text
-sampleForm = renderDivs $ areq textField "Add an item:" Nothing
+messageForm :: Form Message
+messageForm = renderDivs $ Message
+    <$> areq textField "Add an item:" Nothing

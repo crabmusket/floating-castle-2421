@@ -13,7 +13,9 @@ $('##{rawJS formId}').submit(function() {
 		dataType: 'json',
 		statusCode: {
 			200: function(response) {
-				console.log(response.value);
+				if(response.error) {
+					alert(response.error);
+				}
 			},
 		},
 	});
