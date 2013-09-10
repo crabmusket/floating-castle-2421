@@ -7,10 +7,10 @@ import Text.Julius (rawJS)
 getHomeR :: Handler Html
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost messageForm
-    let formId = "theForm" :: Text
     defaultLayout $ do
         setTitle "floating-castle"
         $(widgetFile "homepage")
+            where formId = "theForm" :: Text
 
 postHomeR :: Handler Value
 postHomeR = do
