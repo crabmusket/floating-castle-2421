@@ -6,7 +6,7 @@
 
 $if not $ null messages
     <ul>
-        $forall Entity _ message <- messages
-            <li>
+        $forall Entity mid message <- messages
+            <li id=#{show mid}>
                 <p>#{showMarkdown $ messageText message}
                 <p>#{show $ messagePosted message}

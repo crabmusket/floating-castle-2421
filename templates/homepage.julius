@@ -8,7 +8,7 @@ $('##{rawJS formId}').submit(function() {
 
 	$.ajax({
 		type: 'POST',
-		url: '@{HomeR}',
+		url: '@{MessagesR}',
 		data: values,
 		dataType: 'json',
 		statusCode: {

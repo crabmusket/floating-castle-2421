@@ -20,6 +20,7 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      Handler.Home
+                     Handler.Messages
                      Helpers.Heroku
 
     if flag(dev) || flag(library-only)
