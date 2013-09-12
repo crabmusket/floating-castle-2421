@@ -41,12 +41,16 @@ setInterval(function() {
 						$('##{rawJS listId}').prepend(
 							$('<li>')
 								.attr('id', message.id)
-								.html('<p>' + message.text + '</p><p>' + message.posted + '</p>'));
+								.append('<p>' + message.text + '</p>')
+								.append($('<abbr title="' + message.posted + '" />').timeago()));
 					});
 				}
 			},
 		},
 	});
 	lastUpdate = new Date();
-}, 1000);
+}, 10000);
 
+$(document).ready(function() {
+	$("abbr.timeago").timeago();
+});

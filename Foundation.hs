@@ -85,6 +85,9 @@ instance Yesod App where
                 [ css_normalize_css
                 , css_bootstrap_css
                 ])
+            $(combineScripts 'StaticR
+                [ js_jquery_timeago_js
+                ])
             $(widgetFile "default-layout")
         giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
