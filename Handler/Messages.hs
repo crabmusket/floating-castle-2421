@@ -15,7 +15,7 @@ getMessagesR = do
     case parseUTCTime timeString of
         Nothing -> return $ object ["messages" .= False]
         Just t  -> do
-            messages <- runDB $ selectList [MessagePosted >. t] [Desc MessagePosted]
+            messages <- runDB $ selectList [MessagePosted >. t] [Asc MessagePosted]
             let jsonMessages = map jsonMessage messages
             return $ object ["messages" .= jsonMessages]
 

@@ -1,8 +1,19 @@
+var addMessage = function(message) {
+	$('##{rawJS listId}').prepend(
+		$('<li>')
+			.attr('id', message.id)
+			.append('<p>' + message.text + '</p>')
+			.append($('<abbr class="timeago" title="' + message.posted + '" />').timeago()));
+}
+
 $('##{rawJS formId}').submit(function() {
 	var values = {};
 	$(this).find(':input').each(function() {
 		if(this.name) {
 			values[this.name] = $(this).val();
+			if(this.name != '_token') {
+				$(this).val('');
+			}
 		}
 	});
 
@@ -13,7 +24,9 @@ $('##{rawJS formId}').submit(function() {
 		dataType: 'json',
 		statusCode: {
 			200: function(response) {
-				if(response.error) {
+				if(response.message) {
+					//addMessage(response.message);
+				} else if(response.error) {
 					alert(response.error);
 				}
 			},
@@ -31,11 +44,7 @@ setInterval(function() {
 	var handleResponse = function(response) {
 		if(response.messages.length) {
 			$.each(response.messages, function(i, message) {
-				$('##{rawJS listId}').prepend(
-					$('<li>')
-						.attr('id', message.id)
-						.append('<p>' + message.text + '</p>')
-						.append($('<abbr title="' + message.posted + '" />').timeago()));
+				addMessage(message);
 			});
 		}
 	};
