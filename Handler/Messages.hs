@@ -25,8 +25,8 @@ postMessagesR = do
     ((result, _), _) <- runFormPost messageForm
     case result of
         FormSuccess msg -> do
-            _ <- runDB $ insert msg
-            return $ object ["success" .= True]
+            mid <- runDB $ insert msg
+            return $ object ["message" .= jsonMessage (Entity mid msg)]
         _ -> return $ object ["error" .= ("Invalid submission." :: Text)]
 
 deleteMessagesR :: Handler Value
