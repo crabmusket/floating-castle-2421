@@ -2,9 +2,9 @@ module Handler.Messages where
 
 import Import hiding (parseTime)
 import Data.Time (UTCTime, getCurrentTime)
-import Data.Time.Format (parseTime)
+import Data.Time.Format (parseTime, formatTime)
 import System.Locale (defaultTimeLocale)
-import Data.Text (unpack)
+import Data.Text (pack, unpack)
 import Data.Text.Lazy (fromStrict, toStrict)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Markdown (markdown, def)
@@ -39,10 +39,13 @@ messageForm = renderDivs $ Message
 parseUTCTime :: Text -> Maybe UTCTime
 parseUTCTime = parseTime defaultTimeLocale "%F %T%Q" . unpack
 
+showUTCTime :: UTCTime -> Text
+showUTCTime = pack . formatTime defaultTimeLocale "%F %TZ"
+
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
     [ "text" .= renderMarkdown ( messageText m)
-    , "posted" .= show (messagePosted m)
+    , "posted" .= showUTCTime (messagePosted m)
     , "id" .= show mid
     ]
 

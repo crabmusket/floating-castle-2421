@@ -3,7 +3,7 @@ module Handler.Home where
 
 import Import
 import Text.Julius (rawJS)
-import Handler.Messages (messageForm, showMarkdown)
+import Handler.Messages (messageForm, showMarkdown, showUTCTime)
 
 getHomeR :: Handler Html
 getHomeR = do

@@ -9,4 +9,4 @@ $if not $ null messages
         $forall Entity mid message <- messages
             <li id=#{show mid}>
                 <p>#{showMarkdown $ messageText message}
-                <p>#{show $ messagePosted message}
+                <p>#{showUTCTime $ messagePosted message}
