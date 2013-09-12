@@ -28,6 +28,18 @@ var getUTCString = function (time) {
 
 var lastUpdate = new Date();
 setInterval(function() {
+	var handleResponse = function(response) {
+		if(response.messages.length) {
+			$.each(response.messages, function(i, message) {
+				$('##{rawJS listId}').prepend(
+					$('<li>')
+						.attr('id', message.id)
+						.append('<p>' + message.text + '</p>')
+						.append($('<abbr title="' + message.posted + '" />').timeago()));
+			});
+		}
+	};
+
 	var timeString = getUTCString(lastUpdate);
 	$.ajax({
 		type: 'GET',
@@ -35,21 +47,11 @@ setInterval(function() {
 		data: {'time': timeString},
 		dataType: 'json',
 		statusCode: {
-			200: function(response) {
-				if(response.messages.length) {
-					$.each(response.messages, function(i, message) {
-						$('##{rawJS listId}').prepend(
-							$('<li>')
-								.attr('id', message.id)
-								.append('<p>' + message.text + '</p>')
-								.append($('<abbr title="' + message.posted + '" />').timeago()));
-					});
-				}
-			},
+			200: handleResponse,
 		},
 	});
 	lastUpdate = new Date();
-}, 10000);
+}, 10 * 1000);
 
 $(document).ready(function() {
 	$("abbr.timeago").timeago();
