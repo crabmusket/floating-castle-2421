@@ -46,7 +46,7 @@ jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
     [ "text" .= renderMarkdown ( messageText m)
     , "posted" .= showUTCTime (messagePosted m)
-    , "id" .= show mid
+    , "id" .= toPathPiece mid
     ]
 
 showMarkdown :: Text -> Html

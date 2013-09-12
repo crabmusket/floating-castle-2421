@@ -1,9 +1,13 @@
 var addMessage = function(message) {
+	if($('#'+message.id).length) {
+		return;
+	}
 	$('##{rawJS listId}').prepend(
 		$('<li>')
-			.attr('id', message.id)
-			.append('<p>' + message.text + '</p>')
-			.append($('<abbr class="timeago" title="' + message.posted + '" />').timeago()));
+		.attr('id', message.id)
+		.append('<p>' + message.text + '</p>')
+		.append($('<abbr class="timeago" title="' + message.posted + '" />').timeago())
+	);
 }
 
 $('##{rawJS formId}').submit(function() {
@@ -25,7 +29,7 @@ $('##{rawJS formId}').submit(function() {
 		statusCode: {
 			200: function(response) {
 				if(response.message) {
-					//addMessage(response.message);
+					addMessage(response.message);
 				} else if(response.error) {
 					alert(response.error);
 				}

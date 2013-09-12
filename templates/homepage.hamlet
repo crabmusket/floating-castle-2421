@@ -7,7 +7,7 @@
 $if not $ null messages
     <ul id=#{listId}>
         $forall Entity mid message <- messages
-            <li id=#{show mid}>
+            <li id=#{toPathPiece mid}>
                 <p>#{showMarkdown $ messageText message}
                 <abbr .timeago title=#{showUTCTime $ messagePosted message}>
 
