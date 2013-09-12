@@ -12,8 +12,7 @@ import Text.Markdown (markdown, def)
 getMessagesR :: Handler Value
 getMessagesR = do
     timeString <- runInputGet $ ireq textField "time"
-    let time = parseUTCTime timeString
-    case time of
+    case parseUTCTime timeString of
         Nothing -> return $ object ["messages" .= False]
         Just t  -> do
             messages <- runDB $ selectList [MessagePosted >. t] [Desc MessagePosted]
