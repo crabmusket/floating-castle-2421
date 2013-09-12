@@ -38,7 +38,7 @@ messageForm = renderDivs $ Message
     <*> lift (liftIO getCurrentTime)
 
 parseUTCTime :: Text -> Maybe UTCTime
-parseUTCTime = parseTime defaultTimeLocale "%F %k:%M:%S%Q" . unpack
+parseUTCTime = parseTime defaultTimeLocale "%F %T%Q" . unpack
 
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
