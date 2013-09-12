@@ -10,3 +10,5 @@ $if not $ null messages
             <li id=#{show mid}>
                 <p>#{showMarkdown $ messageText message}
                 <abbr .timeago title=#{showUTCTime $ messagePosted message}>
+
+<div #timeAgoTranslator src=_{MsgTimeAgoScript}>

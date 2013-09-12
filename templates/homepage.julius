@@ -64,4 +64,6 @@ setInterval(function() {
 
 $(document).ready(function() {
 	$("abbr.timeago").timeago();
+	// Hack attack
+	$("body").append($("<script>").attr('src', '/static/js/'+$('#timeAgoTranslator').attr('src')));
 });
