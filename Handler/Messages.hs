@@ -1,6 +1,7 @@
 module Handler.Messages where
 
 import Import hiding (parseTime)
+import Text.Julius (rawJS)
 import Data.Time (UTCTime, getCurrentTime)
 import Data.Time.Format (parseTime)
 import System.Locale (defaultTimeLocale)
@@ -35,7 +36,11 @@ messageForm = renderDivs $ Message
     <*> lift (liftIO getCurrentTime)
 
 parseUTCTime :: Text -> Maybe UTCTime
-parseUTCTime = parseTime defaultTimeLocale "%F %T%Q" . unpack
+parseUTCTime = parseTime defaultTimeLocale "%F %k:%M:%S%Q" . unpack
 
 jsonMessage :: Entity Message -> Value
-jsonMessage (Entity _ m) = object ["text" .= messageText m, "posted" .= messagePosted m]
+jsonMessage (Entity mid m) = object
+    [ "text" .= messageText m
+    , "posted" .= messagePosted m
+    , "id" .= show mid
+    ]

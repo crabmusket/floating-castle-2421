@@ -21,3 +21,32 @@ $('##{rawJS formId}').submit(function() {
 	});
 	return false;
 });
+
+var getUTCString = function (time) {
+	return time.toISOString().replace('T', ' ').slice(0, -1);
+}
+
+var lastUpdate = new Date();
+setInterval(function() {
+	var timeString = getUTCString(lastUpdate);
+	$.ajax({
+		type: 'GET',
+		url: '@{MessagesR}',
+		data: {'time': timeString},
+		dataType: 'json',
+		statusCode: {
+			200: function(response) {
+				if(response.messages.length) {
+					$.each(response.messages, function(i, message) {
+						$('##{rawJS listId}').prepend(
+							$('<li>')
+								.attr('id', message.id)
+								.html('<p>' + message.text + '</p><p>' + message.posted + '</p>'));
+					});
+				}
+			},
+		},
+	});
+	lastUpdate = new Date();
+}, 1000);
+

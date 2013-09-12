@@ -15,6 +15,7 @@ getHomeR = do
         setTitle "floating-castle"
         $(widgetFile "homepage")
             where formId = "theForm" :: Text
+                  listId = "theList" :: Text
 
 showMarkdown :: Text -> Html
 showMarkdown = markdown def . fromStrict

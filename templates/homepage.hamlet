@@ -5,7 +5,7 @@
     <input type="submit" value="Send it!">
 
 $if not $ null messages
-    <ul>
+    <ul id=#{listId}>
         $forall Entity mid message <- messages
             <li id=#{show mid}>
                 <p>#{showMarkdown $ messageText message}
