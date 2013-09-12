@@ -1,5 +1,10 @@
+body {
+	text-align: center
+}
+
 h1 {
-   text-align: center
+   text-align: center;
+	margin: 1em;
 }
 
 form#submission {
@@ -11,4 +16,22 @@ form#submission {
 
 form#submission input[type=text] {
 	width: inherit;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+}
+
+li {
+	margin-bottom: 2em
+}
+
+abbr.timeago {
+	font-style: italic;
+	font-size: smaller;
+}
+
+footer {
+	margin: 4em
 }
