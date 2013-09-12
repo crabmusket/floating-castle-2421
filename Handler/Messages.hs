@@ -44,7 +44,7 @@ parseUTCTime = parseTime defaultTimeLocale "%F %k:%M:%S%Q" . unpack
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
     [ "text" .= (toStrict $ renderHtml $ showMarkdown $ messageText m)
-    , "posted" .= messagePosted m
+    , "posted" .= show (messagePosted m)
     , "id" .= show mid
     ]
 
