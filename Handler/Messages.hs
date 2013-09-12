@@ -1,13 +1,12 @@
 module Handler.Messages where
 
 import Import hiding (parseTime)
-import Text.Julius (rawJS)
 import Data.Time (UTCTime, getCurrentTime)
 import Data.Time.Format (parseTime)
 import System.Locale (defaultTimeLocale)
 import Data.Text (unpack)
 import Data.Text.Lazy (fromStrict, toStrict)
-import Text.Blaze.Renderer.Text (renderHtml)
+import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Markdown (markdown, def)
 
 getMessagesR :: Handler Value
@@ -43,10 +42,13 @@ parseUTCTime = parseTime defaultTimeLocale "%F %k:%M:%S%Q" . unpack
 
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
-    [ "text" .= (toStrict $ renderHtml $ showMarkdown $ messageText m)
+    [ "text" .= renderMarkdown ( messageText m)
     , "posted" .= show (messagePosted m)
     , "id" .= show mid
     ]
 
 showMarkdown :: Text -> Html
 showMarkdown = markdown def . fromStrict
+
+renderMarkdown :: Text -> Text
+renderMarkdown = toStrict . renderHtml . showMarkdown
