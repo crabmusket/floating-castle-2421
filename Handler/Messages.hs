@@ -14,7 +14,7 @@ getMessagesR = do
     case time of
         Nothing -> return $ object ["messages" .= False]
         Just t  -> do
-            messages <- runDB $ selectList [MessagePosted >. t] []
+            messages <- runDB $ selectList [MessagePosted >. t] [Desc MessagePosted]
             let jsonMessages = map jsonMessage messages
             return $ object ["messages" .= jsonMessages]
 

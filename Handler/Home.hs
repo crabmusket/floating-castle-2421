@@ -10,7 +10,7 @@ import Handler.Messages (messageForm)
 getHomeR :: Handler Html
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost messageForm
-    messages <- runDB $ selectList [] []
+    messages <- runDB $ selectList [] [Desc MessagePosted]
     defaultLayout $ do
         setTitle "floating-castle"
         $(widgetFile "homepage")
