@@ -1,11 +1,21 @@
 module Handler.Messages where
 
-import Import
-import Data.Time (getCurrentTime)
+import Import hiding (parseTime)
+import Data.Time (UTCTime, getCurrentTime)
+import Data.Time.Format (parseTime)
+import System.Locale (defaultTimeLocale)
+import Data.Text (unpack)
 
 getMessagesR :: Handler Value
 getMessagesR = do
-    error "Not yet implemented: deleteMessagesR"
+    timeString <- runInputGet $ ireq textField "time"
+    let time = parseUTCTime timeString
+    case time of
+        Nothing -> return $ object ["messages" .= False]
+        Just t  -> do
+            messages <- runDB $ selectList [MessagePosted >. t] []
+            let jsonMessages = map jsonMessage messages
+            return $ object ["messages" .= jsonMessages]
 
 postMessagesR :: Handler Value
 postMessagesR = do
@@ -23,3 +33,9 @@ messageForm :: Form Message
 messageForm = renderDivs $ Message
     <$> areq textField "Add an item:" Nothing
     <*> lift (liftIO getCurrentTime)
+
+parseUTCTime :: Text -> Maybe UTCTime
+parseUTCTime = parseTime defaultTimeLocale "%F %T%Q" . unpack
+
+jsonMessage :: Entity Message -> Value
+jsonMessage (Entity _ m) = object ["text" .= messageText m, "posted" .= messagePosted m]
