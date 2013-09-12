@@ -3,9 +3,7 @@ module Handler.Home where
 
 import Import
 import Text.Julius (rawJS)
-import Text.Markdown (markdown, def)
-import Data.Text.Lazy (fromStrict)
-import Handler.Messages (messageForm)
+import Handler.Messages (messageForm, showMarkdown)
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -16,6 +14,3 @@ getHomeR = do
         $(widgetFile "homepage")
             where formId = "theForm" :: Text
                   listId = "theList" :: Text
-
-showMarkdown :: Text -> Html
-showMarkdown = markdown def . fromStrict

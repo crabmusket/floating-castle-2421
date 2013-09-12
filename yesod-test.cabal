@@ -77,6 +77,7 @@ library
                  , markdown                      >= 0.1
                  , time                          >= 1.4
                  , old-locale                    >= 1.0
+                 , blaze-markup                  >= 0.5
 
 executable         yesod-test
     if flag(library-only)

@@ -6,6 +6,9 @@ import Data.Time (UTCTime, getCurrentTime)
 import Data.Time.Format (parseTime)
 import System.Locale (defaultTimeLocale)
 import Data.Text (unpack)
+import Data.Text.Lazy (fromStrict, toStrict)
+import Text.Blaze.Renderer.Text (renderHtml)
+import Text.Markdown (markdown, def)
 
 getMessagesR :: Handler Value
 getMessagesR = do
@@ -40,7 +43,10 @@ parseUTCTime = parseTime defaultTimeLocale "%F %k:%M:%S%Q" . unpack
 
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
-    [ "text" .= messageText m
+    [ "text" .= (toStrict $ renderHtml $ showMarkdown $ messageText m)
     , "posted" .= messagePosted m
     , "id" .= show mid
     ]
+
+showMarkdown :: Text -> Html
+showMarkdown = markdown def . fromStrict
