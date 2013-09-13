@@ -3,9 +3,11 @@
 This [Yesod][] website is a basic example that is deployable to [Heroku][].
 I have a few simple goals to achieve:
 
- * Use MongoDB to store items
+ * Use MongoDB backend
  * Render items using Markdown
- * An item ticker on the frontpage that loads new entries asynchronously
+ * Load new entries asynchronously
+ * Update and delete entries
+ * Respond to page focus/blur for visual cues
 
  [Yesod]: yesodweb.com
  [Heroku]: heroku.com
