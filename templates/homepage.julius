@@ -8,6 +8,7 @@ var addMessage = function(message) {
 		.append('<p>' + message.text + '</p>')
 		.append('<p class=hidden>' + message.raw + '</p>')
 		.append($('<abbr class=timeago />').attr('title', message.posted).timeago())
+		.append($('<a class=editMessage>#{jsLocal MsgEditThis}</a>'))
 		.append($('<a class=deleteMessage>#{jsLocal MsgDeleteThis}</a>'))
 		.slideDown('slow')
 	);

@@ -11,4 +11,5 @@ $if not $ null messages
                 <p>#{showMarkdown $ messageText message}
                 <p .hidden>#{messageText message}
                 <abbr .timeago title=#{showUTCTime $ messagePosted message}>
+                <a .editMessage>_{MsgEditThis}
                 <a .deleteMessage>_{MsgDeleteThis}

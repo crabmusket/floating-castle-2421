@@ -36,7 +36,7 @@ footer {
 	margin: 4em
 }
 
-a.deleteMessage {
+a.deleteMessage, a.editMessage {
    font-size: smaller;
    margin-left: 1em;
 }
