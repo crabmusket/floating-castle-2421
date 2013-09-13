@@ -8,6 +8,7 @@ I have a few simple goals to achieve:
  * Load new entries asynchronously
  * Update and delete entries
  * Respond to page focus/blur for visual cues
+ * User login or anonymous posts
 
  [Yesod]: yesodweb.com
  [Heroku]: heroku.com
