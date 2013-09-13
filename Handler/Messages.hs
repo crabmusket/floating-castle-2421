@@ -51,7 +51,8 @@ showUTCTime = pack . formatTime defaultTimeLocale "%F %TZ"
 
 jsonMessage :: Entity Message -> Value
 jsonMessage (Entity mid m) = object
-    [ "text" .= renderMarkdown ( messageText m)
+    [ "text" .= renderMarkdown (messageText m)
+    , "raw" .= messageText m
     , "posted" .= showUTCTime (messagePosted m)
     , "id" .= toPathPiece mid
     ]

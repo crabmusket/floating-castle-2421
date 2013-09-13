@@ -44,3 +44,7 @@ a.deleteMessage {
 a {
    cursor: pointer;
 }
+
+.hidden {
+   display: none;
+}
