@@ -6,7 +6,9 @@ var addMessage = function(message) {
 		$('<li>')
 		.attr('id', message.id)
 		.append('<p>' + message.text + '</p>')
-		.append($('<abbr class="timeago" title="' + message.posted + '" />').timeago())
+		.append($('<abbr class=timeago />').attr('title', message.posted).timeago())
+		.append($('<a class=deleteMessage>delete</a>').attr('target', message.id))
+		.slideDown('slow')
 	);
 }
 
@@ -70,5 +72,25 @@ $(document).ready(function() {
 	// Hack attack
 	$.getScript('/static/js/'+$('#timeAgoTranslator').attr('src'), function() {
 		$("abbr.timeago").timeago();
+	});
+});
+
+$('body').on('click', 'a.deleteMessage', function(e) {
+	e.preventDefault();
+
+	var handleResponse = function(response) {
+		if(response.deleted) {
+			$('#'+response.deleted).slideUp('slow', function() {$(this).remove();});
+		}
+	};
+
+	$.ajax({
+		type: 'DELETE',
+		url: '@{MessagesR}',
+		data: {'id': $(this).parent().attr('id')},
+		dataType: 'json',
+		statusCode: {
+			200: handleResponse,
+		},
 	});
 });

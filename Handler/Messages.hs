@@ -29,7 +29,14 @@ postMessagesR = do
         _ -> return $ object ["error" .= ("Invalid submission." :: Text)]
 
 deleteMessagesR :: Handler Value
-deleteMessagesR = error "Not yet implemented: deleteMessagesR"
+deleteMessagesR = do
+    messageIdString <- runInputPost $ ireq textField "id"
+    let messageId = fromPathPiece messageIdString :: Maybe MessageId
+    case messageId of
+        Nothing -> return $ object []
+        Just mid -> do
+            runDB $ delete mid
+            return $ object ["deleted" .= messageIdString]
 
 messageForm :: Form Message
 messageForm = renderDivs $ Message

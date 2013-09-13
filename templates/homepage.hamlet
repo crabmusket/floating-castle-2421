@@ -10,5 +10,6 @@ $if not $ null messages
             <li id=#{toPathPiece mid}>
                 <p>#{showMarkdown $ messageText message}
                 <abbr .timeago title=#{showUTCTime $ messagePosted message}>
+                <a class=deleteMessage target=#{toPathPiece mid}>delete
 
 <div #timeAgoTranslator src=_{MsgTimeAgoScript}>

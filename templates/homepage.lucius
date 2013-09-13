@@ -24,7 +24,7 @@ ul {
 }
 
 li {
-	margin-bottom: 2em
+	padding-bottom: 2em
 }
 
 abbr.timeago {
@@ -34,4 +34,13 @@ abbr.timeago {
 
 footer {
 	margin: 4em
+}
+
+a.deleteMessage {
+   font-size: smaller;
+   margin-left: 1em;
+}
+
+a {
+   cursor: pointer;
 }
