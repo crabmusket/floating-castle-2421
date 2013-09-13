@@ -1,5 +1,5 @@
 /  HomeR     GET
-/m MessagesR GET POST DELETE
+/m MessagesR GET POST PUT DELETE
 
 /static StaticR Static getStatic
 /auth   AuthR   Auth   getAuth

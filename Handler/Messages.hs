@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 module Handler.Messages where
 
 import Import hiding (parseTime)
@@ -8,6 +9,7 @@ import Data.Text (pack, unpack)
 import Data.Text.Lazy (fromStrict, toStrict)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Markdown (markdown, def)
+import Data.Maybe (fromJust)
 
 getMessagesR :: Handler Value
 getMessagesR = do
@@ -30,13 +32,25 @@ postMessagesR = do
 
 deleteMessagesR :: Handler Value
 deleteMessagesR = do
-    messageIdString <- runInputPost $ ireq textField "id"
-    let messageId = fromPathPiece messageIdString :: Maybe MessageId
-    case messageId of
+    idString <- runInputPost $ ireq textField "id"
+    case (fromPathPiece idString :: Maybe MessageId) of
         Nothing -> return $ object []
         Just mid -> do
             runDB $ delete mid
-            return $ object ["deleted" .= messageIdString]
+            return $ object ["deleted" .= idString]
+
+putMessagesR :: Handler Value
+putMessagesR = do
+    (idString, newText) <- runInputPost $ (,)
+        <$> ireq textField "id"
+        <*> ireq textField "text"
+    case fromPathPiece idString of
+        Nothing -> return $ object []
+        Just mid -> do
+            newMessage <- runDB $ do
+                update mid [MessageText =. newText]
+                get mid
+            return $ object ["message" .= jsonMessage (Entity mid $ fromJust newMessage)]
 
 messageForm :: Form Message
 messageForm = renderDivs $ Message
