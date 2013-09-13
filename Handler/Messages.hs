@@ -40,7 +40,7 @@ deleteMessagesR = do
 
 messageForm :: Form Message
 messageForm = renderDivs $ Message
-    <$> areq textField "Add an item:" Nothing
+    <$> areq textField "" Nothing
     <*> lift (liftIO getCurrentTime)
 
 parseUTCTime :: Text -> Maybe UTCTime

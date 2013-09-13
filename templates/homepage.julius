@@ -7,7 +7,7 @@ var addMessage = function(message) {
 		.attr('id', message.id)
 		.append('<p>' + message.text + '</p>')
 		.append($('<abbr class=timeago />').attr('title', message.posted).timeago())
-		.append($('<a class=deleteMessage>delete</a>').attr('target', message.id))
+		.append($('<a class=deleteMessage>#{jsLocal MsgDeleteThis}</a>').attr('target', message.id))
 		.slideDown('slow')
 	);
 }
@@ -69,8 +69,7 @@ setInterval(function() {
 }, 10 * 1000);
 
 $(document).ready(function() {
-	// Hack attack
-	$.getScript('/static/js/'+$('#timeAgoTranslator').attr('src'), function() {
+	$.getScript('/static/js/#{jsLocal MsgTimeAgoScript}', function() {
 		$("abbr.timeago").timeago();
 	});
 });

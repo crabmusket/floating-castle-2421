@@ -9,6 +9,8 @@ getHomeR :: Handler Html
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost messageForm
     messages <- runDB $ selectList [] [Desc MessagePosted]
+    msgRender <- getMessageRender
+    let jsLocal = rawJS . msgRender
     defaultLayout $ do
         setTitle "floating-castle"
         $(widgetFile "homepage")

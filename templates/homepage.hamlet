@@ -2,7 +2,7 @@
 
 <form id=#{formId} method=post enctype=#{formEnctype}>
     ^{formWidget}
-    <input type="submit" value="Send it!">
+    <input type="submit" value="_{MsgSend}">
 
 $if not $ null messages
     <ul id=#{listId}>
@@ -10,6 +10,4 @@ $if not $ null messages
             <li id=#{toPathPiece mid}>
                 <p>#{showMarkdown $ messageText message}
                 <abbr .timeago title=#{showUTCTime $ messagePosted message}>
-                <a class=deleteMessage target=#{toPathPiece mid}>delete
-
-<div #timeAgoTranslator src=_{MsgTimeAgoScript}>
+                <a class=deleteMessage target=#{toPathPiece mid}>_{MsgDeleteThis}
