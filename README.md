@@ -1,6 +1,6 @@
 # floating-castle-2421
 
-This [Yesod][] website is a basic example that is deployable to [Heroku][].
+This [Yesod][] website is a basic example that is deployable to [Heroku][] using [this buildback][buildpack].
 I have a few simple goals to achieve:
 
  * Use MongoDB backend
@@ -12,3 +12,4 @@ I have a few simple goals to achieve:
 
  [Yesod]: yesodweb.com
  [Heroku]: heroku.com
+ [buildpack]: github.com/puffnfresh/heroku-buildpack-haskell
