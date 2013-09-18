@@ -10,9 +10,10 @@ getHomeR = do
     (formWidget, formEnctype) <- generateFormPost messageForm
     messages <- runDB $ selectList [] [Desc MessagePosted]
     msgRender <- getMessageRender
+    formId <- newIdent
+    listId <- newIdent
     let jsLocal = rawJS . msgRender
+        messagesWidget = $(widgetFile "messages")
     defaultLayout $ do
         setTitle "floating-castle"
         $(widgetFile "homepage")
-            where formId = "theForm" :: Text
-                  listId = "theList" :: Text

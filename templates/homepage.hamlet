@@ -4,12 +4,4 @@
     ^{formWidget}
     <input type="submit" value="_{MsgSend}">
 
-$if not $ null messages
-    <ul id=#{listId}>
-        $forall Entity mid message <- messages
-            <li id=#{toPathPiece mid}>
-                <p>#{showMarkdown $ messageText message}
-                <p .hidden>#{messageText message}
-                <abbr .timeago title=#{showUTCTime $ messagePosted message}>
-                <a .editMessage>_{MsgEditThis}
-                <a .deleteMessage>_{MsgDeleteThis}
+^{messagesWidget}
