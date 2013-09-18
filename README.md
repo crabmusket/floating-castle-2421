@@ -9,7 +9,6 @@ I have a few simple goals to achieve:
  * Update and delete entries
  * Respond to page focus/blur for visual cues
  * User login or anonymous posts
- * Likes
 
  [Yesod]: yesodweb.com
  [Heroku]: heroku.com
