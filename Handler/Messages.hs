@@ -22,14 +22,16 @@ getMessagesR = do
             pc <- widgetToPageContent $(widgetFile "messages")
             giveUrlRenderer [hamlet| ^{pageBody pc} |]
 
-postMessagesR :: Handler Value
+postMessagesR :: Handler Html
 postMessagesR = do
     ((result, _), _) <- runFormPost messageForm
     case result of
         FormSuccess msg -> do
-            mid <- runDB $ insert msg
-            return $ object ["message" .= jsonMessage (Entity mid msg)]
-        _ -> return $ object ["error" .= ("Invalid submission." :: Text)]
+            messageId <- runDB $ insert msg
+            let messages = [Entity messageId msg]
+            pc <- widgetToPageContent $(widgetFile "messages")
+            giveUrlRenderer [hamlet| ^{pageBody pc} |]
+        _ -> invalidArgs ["Invalid input"] >> return ""
 
 deleteMessagesR :: Handler Value
 deleteMessagesR = do
