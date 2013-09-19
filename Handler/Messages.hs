@@ -11,15 +11,16 @@ import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Markdown (markdown, def)
 import Data.Maybe (fromJust)
 
-getMessagesR :: Handler Value
+getMessagesR :: Handler Html
 getMessagesR = do
     timeString <- runInputGet $ ireq textField "time"
     case parseUTCTime timeString of
-        Nothing -> return $ object ["messages" .= False]
-        Just t  -> do
+        Nothing -> invalidArgs ["Misunderstood time format"] >> return ""
+        Just t -> do
             messages <- runDB $ selectList [MessagePosted >. t] [Asc MessagePosted]
-            let jsonMessages = map jsonMessage messages
-            return $ object ["messages" .= jsonMessages]
+            listId <- newIdent
+            pc <- widgetToPageContent $(widgetFile "messages")
+            giveUrlRenderer [hamlet| ^{pageBody pc} |]
 
 postMessagesR :: Handler Value
 postMessagesR = do

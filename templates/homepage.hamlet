@@ -4,4 +4,5 @@
     ^{formWidget}
     <input type="submit" value="_{MsgSend}">
 
-^{messagesWidget}
+<ul id=#{listId}>
+    ^{messagesWidget}
