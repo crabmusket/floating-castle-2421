@@ -1,18 +1,12 @@
-var addMessage = function(message) {
-	if($('#'+message.id).length) {
-		return;
-	}
-	$('##{rawJS listId}').prepend(
-		$('<li>')
-		.attr('id', message.id)
-		.append('<p>' + message.text + '</p>')
-		.append('<p class=hidden>' + message.raw + '</p>')
-		.append($('<abbr class=timeago />').attr('title', message.posted).timeago())
-		.append($('<a class=editMessage>#{jsLocal MsgEditThis}</a>'))
-		.append($('<a class=deleteMessage>#{jsLocal MsgDeleteThis}</a>'))
-		.slideDown('slow')
-	);
-}
+var addMessage = function(text) {
+	var dom = $(text);
+	dom.each(function(index, elem) {
+		$(elem).find('abbr.timeago').timeago();
+		if($('#'+elem.id).length == 0) {
+			$('##{rawJS listId}').prepend(elem);
+		}
+	});
+};
 
 $('##{rawJS formId}').submit(function() {
 	var values = {};
@@ -32,10 +26,9 @@ $('##{rawJS formId}').submit(function() {
 		dataType: 'json',
 		statusCode: {
 			200: function(response) {
-				if(response.message) {
-					addMessage(response.message);
-				} else if(response.error) {
-					alert(response.error);
+				var text = response.responseText;
+				if(text.length) {
+					addMessage(text);
 				}
 			},
 		},
@@ -50,10 +43,9 @@ var getUTCString = function (time) {
 var lastUpdate = new Date();
 setInterval(function() {
 	var handleResponse = function(response) {
-		if(response.messages.length) {
-			$.each(response.messages, function(i, message) {
-				addMessage(message);
-			});
+		var text = response.responseText;
+		if(text.length) {
+			addMessage(text);
 		}
 	};
 
