@@ -33,14 +33,14 @@ postMessagesR = do
             giveUrlRenderer [hamlet| ^{pageBody pc} |]
         _ -> invalidArgs ["Invalid input"] >> return ""
 
-deleteMessagesR :: Handler Value
+deleteMessagesR :: Handler Html
 deleteMessagesR = do
     idString <- runInputPost $ ireq textField "id"
     case (fromPathPiece idString :: Maybe MessageId) of
-        Nothing -> return $ object []
+        Nothing -> invalidArgs ["Invalid input"] >> return ""
         Just mid -> do
             runDB $ delete mid
-            return $ object ["deleted" .= idString]
+            return [shamlet| #{toPathPiece mid} |]
 
 putMessagesR :: Handler Value
 putMessagesR = do

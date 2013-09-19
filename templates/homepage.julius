@@ -72,8 +72,9 @@ $('body').on('click', 'a.deleteMessage', function(e) {
 	e.preventDefault();
 
 	var handleResponse = function(response) {
-		if(response.deleted) {
-			$('#'+response.deleted).slideUp('slow', function() {$(this).remove();});
+		var text = response.responseText;
+		if(text.length) {
+			$('#'+text).slideUp('slow', function() {$(this).remove();});
 		}
 	};
 
