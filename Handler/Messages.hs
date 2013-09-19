@@ -9,7 +9,6 @@ import Data.Text (pack, unpack)
 import Data.Text.Lazy (fromStrict, toStrict)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Markdown (markdown, def)
-import Data.Maybe (fromJust)
 
 getMessagesR :: Handler Html
 getMessagesR = do
@@ -42,18 +41,23 @@ deleteMessagesR = do
             runDB $ delete mid
             return [shamlet| #{toPathPiece mid} |]
 
-putMessagesR :: Handler Value
+putMessagesR :: Handler Html
 putMessagesR = do
     (idString, newText) <- runInputPost $ (,)
         <$> ireq textField "id"
         <*> ireq textField "text"
     case fromPathPiece idString of
-        Nothing -> return $ object []
-        Just mid -> do
+        Nothing -> invalidArgs ["Invalid message ID"] >> return ""
+        Just messageId -> do
             newMessage <- runDB $ do
-                update mid [MessageText =. newText]
-                get mid
-            return $ object ["message" .= jsonMessage (Entity mid $ fromJust newMessage)]
+                update messageId [MessageText =. newText]
+                get messageId
+            case newMessage of
+                Nothing -> notFound >> return ""
+                Just msg -> do
+                    let messages = [Entity messageId msg]
+                    pc <- widgetToPageContent $(widgetFile "messages")
+                    giveUrlRenderer [hamlet| ^{pageBody pc} |]
 
 messageForm :: Form Message
 messageForm = renderDivs $ Message
@@ -65,14 +69,6 @@ parseUTCTime = parseTime defaultTimeLocale "%F %T%Q" . unpack
 
 showUTCTime :: UTCTime -> Text
 showUTCTime = pack . formatTime defaultTimeLocale "%F %TZ"
-
-jsonMessage :: Entity Message -> Value
-jsonMessage (Entity mid m) = object
-    [ "text" .= renderMarkdown (messageText m)
-    , "raw" .= messageText m
-    , "posted" .= showUTCTime (messagePosted m)
-    , "id" .= toPathPiece mid
-    ]
 
 showMarkdown :: Text -> Html
 showMarkdown = markdown def . fromStrict
