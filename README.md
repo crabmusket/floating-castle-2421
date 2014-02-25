@@ -10,6 +10,6 @@ I have a few simple goals to achieve:
  * Respond to page focus/blur for visual cues
  * User login or anonymous posts
 
- [Yesod]: yesodweb.com
- [Heroku]: heroku.com
- [buildpack]: github.com/puffnfresh/heroku-buildpack-haskell
+ [Yesod]: http://yesodweb.com
+ [Heroku]: http://heroku.com
+ [buildpack]: https://github.com/puffnfresh/heroku-buildpack-haskell
